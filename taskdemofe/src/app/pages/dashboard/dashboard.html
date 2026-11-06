@@ -1,20 +1,22 @@
-<main class="bg-gray-100 min-h-screen">
-  <div class="max-w-7xl mx-auto px-6 py-10">
-    <!-- Header -->
-    <div class="flex justify-between items-center mb-8">
+<main class="min-h-screen bg-gray-100">
+  <div class="mx-auto max-w-7xl px-6 py-10">
+    <div class="mb-8 flex items-center justify-between">
       <div>
         <h1 class="text-3xl font-bold text-gray-800">User Management</h1>
-        <p class="text-gray-500 mt-2">Manage your users and their information.</p>
+        <p class="mt-2 text-gray-500">Manage your users and their information.</p>
       </div>
 
-      <button
-        class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg font-medium shadow"
-      >
+      <button (click)="openCreateForm()"
+        class="rounded-lg bg-blue-600 px-5 py-3 font-medium text-white shadow hover:bg-blue-700">
         + Add New User
       </button>
     </div>
+
     <app-userstatistics />
-    <app-userform />
-    <app-userlist />
+    <app-userlist (addUser)="openCreateForm()" (editUser)="openEditForm($event)" />
   </div>
+
+  @if (formOpen()) {
+    <app-userform [user]="selectedUser()" (cancel)="closeForm()" (saved)="onSaved()" />
+  }
 </main>

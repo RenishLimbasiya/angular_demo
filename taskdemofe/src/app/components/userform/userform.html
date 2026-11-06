@@ -1,69 +1,68 @@
-<!-- Add User Form -->
-<div class="bg-white rounded-xl shadow-sm p-6 mb-8">
-  <h2 class="text-xl font-bold text-gray-800 mb-6">Add New User</h2>
-
-  <form>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Name -->
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2"> Full Name </label>
-
-        <input
-          type="text"
-          placeholder="Enter full name"
-          class="w-full border border-gray-300 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-        />
-      </div>
-
-      <!-- Email -->
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2"> Email Address </label>
-
-        <input
-          type="email"
-          placeholder="Enter email address"
-          class="w-full border border-gray-300 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-        />
-      </div>
-
-      <!-- Password -->
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2"> Password </label>
-
-        <input
-          type="password"
-          placeholder="Enter password"
-          class="w-full border border-gray-300 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-        />
-      </div>
-
-      <!-- Confirm Password -->
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-2"> Confirm Password </label>
-
-        <input
-          type="password"
-          placeholder="Confirm password"
-          class="w-full border border-gray-300 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-        />
-      </div>
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" (click)="cancel.emit()">
+  <section
+    class="w-full max-w-2xl rounded-xl bg-white p-6 shadow-lg"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-labelledby]="'user-dialog-title'"
+    (click)="$event.stopPropagation()">
+    <div class="mb-6 flex items-center justify-between">
+      <h2 id="user-dialog-title" class="text-xl font-bold text-gray-800">
+        {{ isEditing() ? 'Update User' : 'Add New User' }}
+      </h2>
+      <button type="button" aria-label="Close dialog" (click)="cancel.emit()"
+        class="text-2xl text-gray-500 hover:text-red-600">&times;</button>
     </div>
 
-    <!-- Buttons -->
-    <div class="flex gap-3 mt-6">
-      <button
-        type="submit"
-        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium"
-      >
-        Save User
-      </button>
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <label class="block text-sm font-medium text-gray-700">
+          Full Name
+          <input type="text" formControlName="name" placeholder="Enter full name"
+            class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500" />
+          @if (form.controls.name.touched && form.controls.name.invalid) {
+            <span class="mt-1 block text-xs text-red-600">Name is required (up to 100 characters).</span>
+          }
+        </label>
 
-      <button
-        type="reset"
-        class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium"
-      >
-        Reset
-      </button>
-    </div>
-  </form>
+        <label class="block text-sm font-medium text-gray-700">
+          Email Address
+          <input type="email" formControlName="email" placeholder="Enter email address"
+            class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500" />
+          @if (form.controls.email.touched && form.controls.email.invalid) {
+            <span class="mt-1 block text-xs text-red-600">Enter a valid email address.</span>
+          }
+        </label>
+
+        <label class="block text-sm font-medium text-gray-700">
+          Password {{ isEditing() ? '(leave blank to keep current)' : '' }}
+          <input type="password" formControlName="password" autocomplete="new-password"
+            [placeholder]="isEditing() ? 'Leave blank to keep current password' : 'Enter password'"
+            class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500" />
+          @if (form.controls.password.touched && form.controls.password.invalid) {
+            <span class="mt-1 block text-xs text-red-600">Password must be at least 8 characters.</span>
+          }
+        </label>
+
+        <label class="block text-sm font-medium text-gray-700">
+          Confirm Password
+          <input type="password" formControlName="confirmPassword" autocomplete="new-password"
+            placeholder="Confirm password"
+            class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500" />
+        </label>
+      </div>
+
+      @if (errorMessage()) {
+        <p class="mt-4 text-sm text-red-600" role="alert">{{ errorMessage() }}</p>
+      }
+
+      <div class="mt-6 flex justify-end gap-3">
+        <button type="button" (click)="cancel.emit()"
+          class="rounded-lg bg-gray-200 px-6 py-3 font-medium text-gray-700 hover:bg-gray-300">Cancel</button>
+        <button type="submit" [disabled]="saving()"
+          class="rounded-lg bg-blue-600 px-6 py-3 font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60">
+          {{ saving() ? 'Saving...' : (isEditing() ? 'Update User' : 'Save User') }}
+        </button>
+      </div>
+    </form>
+  </section>
 </div>
