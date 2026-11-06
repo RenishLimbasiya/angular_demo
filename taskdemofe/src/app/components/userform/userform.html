@@ -1,10 +1,6 @@
 <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" (click)="cancel.emit()">
-  <section
-    class="w-full max-w-2xl rounded-xl bg-white p-6 shadow-lg"
-    role="dialog"
-    aria-modal="true"
-    [attr.aria-labelledby]="'user-dialog-title'"
-    (click)="$event.stopPropagation()">
+  <section class="w-full max-w-2xl rounded-xl bg-white p-6 shadow-lg" role="dialog" aria-modal="true"
+    [attr.aria-labelledby]="'user-dialog-title'" (click)="$event.stopPropagation()" >
     <div class="mb-6 flex items-center justify-between">
       <h2 id="user-dialog-title" class="text-xl font-bold text-gray-800">
         {{ isEditing() ? 'Update User' : 'Add New User' }}
@@ -20,7 +16,7 @@
           <input type="text" formControlName="name" placeholder="Enter full name"
             class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500" />
           @if (form.controls.name.touched && form.controls.name.invalid) {
-            <span class="mt-1 block text-xs text-red-600">Name is required (up to 100 characters).</span>
+          <span class="mt-1 block text-xs text-red-600">Name is required (up to 100 characters).</span>
           }
         </label>
 
@@ -29,7 +25,7 @@
           <input type="email" formControlName="email" placeholder="Enter email address"
             class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500" />
           @if (form.controls.email.touched && form.controls.email.invalid) {
-            <span class="mt-1 block text-xs text-red-600">Enter a valid email address.</span>
+          <span class="mt-1 block text-xs text-red-600">Enter a valid email address.</span>
           }
         </label>
 
@@ -39,7 +35,7 @@
             [placeholder]="isEditing() ? 'Leave blank to keep current password' : 'Enter password'"
             class="mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500" />
           @if (form.controls.password.touched && form.controls.password.invalid) {
-            <span class="mt-1 block text-xs text-red-600">Password must be at least 8 characters.</span>
+          <span class="mt-1 block text-xs text-red-600">Password must be at least 8 characters.</span>
           }
         </label>
 
@@ -52,13 +48,13 @@
       </div>
 
       @if (errorMessage()) {
-        <p class="mt-4 text-sm text-red-600" role="alert">{{ errorMessage() }}</p>
+      <p class="mt-4 text-sm text-red-600" role="alert">{{ errorMessage() }}</p>
       }
 
       <div class="mt-6 flex justify-end gap-3">
         <button type="button" (click)="cancel.emit()"
           class="rounded-lg bg-gray-200 px-6 py-3 font-medium text-gray-700 hover:bg-gray-300">Cancel</button>
-        <button type="submit" [disabled]="saving()"
+        <button type="submit" [disabled]="saving() "
           class="rounded-lg bg-blue-600 px-6 py-3 font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60">
           {{ saving() ? 'Saving...' : (isEditing() ? 'Update User' : 'Save User') }}
         </button>

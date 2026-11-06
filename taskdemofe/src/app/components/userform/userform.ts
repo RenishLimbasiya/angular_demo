@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, output, signal } from '@angular/core';
+import { Component, computed, inject, input, OnInit, output, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { userServices, User } from '../../api/services/user/user.services';
@@ -9,7 +9,7 @@ import { userServices, User } from '../../api/services/user/user.services';
   templateUrl: './userform.html',
   styleUrl: './userform.css',
 })
-export class Userform {
+export class Userform implements OnInit {
   readonly user = input<User | null>(null);
   readonly cancel = output<void>();
   readonly saved = output<void>();
@@ -27,7 +27,12 @@ export class Userform {
     confirmPassword: [''],
   });
 
-  constructor() {
+  // constructor() {
+  //   // Keep the form in sync if the modal is reused for another record.
+  //   this.form.controls.name.addValidators(Validators.minLength(2))
+  // }
+
+  ngOnInit(): void {
     // Keep the form in sync if the modal is reused for another record.
     this.form.controls.password.addValidators(Validators.minLength(8));
   }

@@ -53,7 +53,8 @@
                 View
               </button>
 
-              <button (click)="editUser.emit(user)" class="bg-yellow-100 text-yellow-700 hover:bg-yellow-200 px-3 py-2 rounded-md text-sm">
+              <button (click)="editUser.emit(user)"
+                class="bg-yellow-100 text-yellow-700 hover:bg-yellow-200 px-3 py-2 rounded-md text-sm">
                 Edit
               </button>
 
@@ -84,8 +85,7 @@
               </p>
 
               <!-- Button -->
-              <button
-                (click)="addUser.emit()"
+              <button (click)="addUser.emit()"
                 class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition">
                 + Add New User
               </button>
